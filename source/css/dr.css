@@ -1,0 +1,21 @@
+.dr_online {
+    background-color: #cfc;
+}
+
+.dr_pending {
+    background-color: #ffc;
+}
+
+.dr_error { 
+    background-color: #fcc
+}
+
+th.address, td.address {
+    text-align: left;
+}
+
+th.actions, td.actions {
+    width: 80px;
+    text-align: center;
+}
+

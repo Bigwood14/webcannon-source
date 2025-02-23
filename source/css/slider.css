@@ -1,0 +1,60 @@
+/******************************************
+ * * Slider Bar Form Element Script
+ * * 
+ * * Original program copyright David Harrison
+ * *   d_s_h2@hotmail.com
+ * * Version 2 copyright Eric C. Davis
+ * *   eric@10mar2001.com
+ * * 
+ * * Visit http://www.dynamicdrive.com for
+ * *   loads of other scripts.
+ * * 
+ * * This notice MUST stay intact for use.
+ * *
+ * * Modified by Tom Westcott
+ * * http://www.cyberdummy.co.uk
+ * ******************************************/
+
+.move {
+	height: 21px;
+	background: #f4f4ee url(/images/slider/bar_end.png) no-repeat 0 8px;
+	cursor: hand !important;
+	cursor: pointer;
+}
+.move .move2 {
+	margin: 0 1px 0 2px;
+	height: 21px;
+	background: #fff url(/images/slider/bar_repeat.png) repeat-x 0 8px;
+	cursor: hand !important;
+	cursor: pointer;
+}
+
+.move2ondrag {
+	margin: 0 1px 0 2px;
+        height: 21px;
+        cursor: hand !important;
+        cursor: pointer;
+	background: #fff url(/images/slider/bar_repeat_hover.png) repeat-x 0 8px;
+}
+
+.move .slider {
+	margin-left: 0;
+	margin-top: -21px;
+	margin-right: -11px;
+	width: 11px;
+	height: 21px;
+	background: #f4f4ee url(/images/slider/slider.png) no-repeat 0 0;
+	cursor: hand !important;
+	cursor: pointer;
+}
+
+.sliderondrag {
+        margin-left: 0;
+        margin-top: -21px;
+        margin-right: -11px;
+        width: 11px;
+        height: 21px;
+        background: #f4f4ee url(/images/slider/slider_hover.png) no-repeat 0 0;
+        cursor: hand !important;
+        cursor: pointer;
+}

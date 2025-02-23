@@ -1,0 +1,22 @@
+#!/bin/sh
+
+killall bouncerd.php
+cd /www/celibero/no-web/celiberod/bin/
+./bouncerd.php >/dev/null  >/dev/null 2>&1 &
+
+chown -R qmaill /service/qmail-send/log/main/
+chown -R qmaill /service/qmail-smtpd/log/main
+
+/usr/local/bin/svc -h /service/qmail-send
+/usr/local/bin/svc -h /service/qmail-smtpd
+
+#pid=`ps -e | grep " celiberod" | awk '{print $4}'`
+#
+#if test "x$pid" = "x"; then
+#    killall celiberod
+#    screen -wipe
+#    ulimit -n 40960
+#    echo 40960 > /proc/sys/fs/file-max
+#    ../bin/celiberod >/dev/null  >/dev/null 2>&1 &
+#    echo Restarted celibero
+#fi

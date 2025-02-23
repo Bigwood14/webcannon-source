@@ -1,0 +1,12 @@
+<br /><br />
+<table>
+    <tr>
+      <td rowspan="2"><a href="http://{{dn}}/privacy-policy.php"><img src="http://{{dn}}/images/mail/left.gif" width="172" height="96" border="0" /></a></td>
+      <td align="left"><b>{{dn}}</b><br /><font size="1">{address}</font></td>
+    </tr>
+    <tr>
+      <td valign="bottom"><a href="http://{{dn}}/index.php"><img src="http://{{dn}}/images/mail/right.gif" width="304" height="34" border="0" /></a></td>
+    </tr>
+</table>
+</body>
+</html>

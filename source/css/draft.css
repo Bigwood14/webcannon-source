@@ -1,0 +1,61 @@
+#draft-form p.ip-group-title img
+{
+	float: left;
+	display: inline;
+	margin-top: 4px;
+}
+
+#draft-form div.ip-group-ips
+{
+	display: none;	
+}
+
+#draft-form div.ip-group-ips-show
+{
+	display: block;
+}
+
+#draft-form div.ip-group-ips input
+{
+	margin-left: 20px !important;	
+}
+
+
+/*#no_links_to_track td,
+#more_links_to_track td {
+    padding: 8px 16px;
+    text-align: center;
+    color: #900;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+#more_links_to_track td {
+    padding: 4px 8px;
+}
+
+#tracked_links tr.subheading th {
+    padding: 2px 4px;
+    border-top: none;
+    background-color: #fbfbfb;
+}
+
+#tracked_links input, #tracked_links select {
+    display: block;
+    width: 100%;
+}
+
+#tracked_links input.checkbox
+{
+	width: 15px;
+	display: inline;
+}
+
+#tracked_links td.link {
+    width: 20em;
+}
+
+#tracked_links td.remove {
+    background-color: #ffeeee;
+    text-align: center;
+}*/

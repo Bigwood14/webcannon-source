@@ -1,0 +1,10 @@
+#!/bin/sh
+limit datasize 2m
+exec \
+ tcpserver \
+  -HRv -l pop.systemdomain.com \
+  -x /var/qmail/supervise/qmail-pop3d/rules.cdb \
+  0 110 \
+  /var/qmail/bin/qmail-popup pop.systemdomain.com \
+  checkpassword \
+  /var/qmail/bin/qmail-pop3d ./Maildir 2>&1

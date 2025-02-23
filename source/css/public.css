@@ -1,0 +1,28 @@
+body {
+    margin-top: 10px;
+}
+
+body, #contenttable td, #contenttable th {
+    text-align: center;
+}
+
+#public_header {
+    width: 100%;
+}
+
+#contenttable table  {
+    border-spacing: 0px;
+}
+
+#contenttable td {
+    border: 1px solid #ccc;
+    border-top: 0;
+}
+
+#wrapper {
+  margin: auto;
+  width: 780px;
+  border: 1px solid #ccc;
+  border-top: 0;
+}
+

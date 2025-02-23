@@ -1,0 +1,41 @@
+#headers, #footers {
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-top: 2px solid #999;
+}
+
+#headers th.name, #headers td.name, 
+#footers th.name, #footers td.name {
+    text-align: left;
+    border-left: none;
+}
+
+#headers th.name, #footers th.name {
+    text-align: left;
+}
+
+#headers th.actions, #footers th.actions {
+    width: 150px;
+    border-right: none;
+}
+
+#headers tr.default, #footers tr.default {
+    font-weight: bold;
+}
+
+#headers td.actions, #footers td.actions {
+    text-align: right;
+    border-right: none;
+    font-weight: normal;
+}
+
+#text_content textarea, #html_content textarea {
+    display: block;
+    width: 100%;
+}
+
+#content_name input {
+    display: block;
+    width: 100%;
+}
+

@@ -1,0 +1,6 @@
+#!/bin/sh
+limit datasize 3m
+exec tcpserver \
+   -c300 -u000 -g000 -v -p -R \
+     0 25 \
+     /var/qmail/bin/qmail-smtpd 2>&1

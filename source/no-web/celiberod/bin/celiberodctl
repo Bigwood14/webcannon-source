@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# f'ing "Too many open files" should be fixed by this!
+ulimit -n 8192
+echo 8192 > /proc/sys/file-max
+
+case "$1" in
+  start)
+    echo "Starting Celiberod"
+    env - PATH="/www/celibero/no-web/celiberod/bin:/var/qmail/bin:/usr/local/bin" \
+    /www/celibero/no-web/celiberod/bin/celiberod 2>&1 | /usr/local/bin/setuidgid celibero \
+    /usr/local/bin/multilog t n100 s2000000 \
+    /www/celibero/no-web/celiberod/logs &
+    ;;
+  stop)
+    echo "Killing Celiberod"
+    killall -q celiberod
+    ;;
+  restart)
+    $0 stop
+    sleep 5
+    $0 start
+    ;;
+  *)
+    echo "Usage: celiberodctl {start|stop|restart}"
+esac

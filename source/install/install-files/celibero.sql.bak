@@ -1,0 +1,645 @@
+-- SQL Dump
+-- Version: $Id: celibero.sql,v 1.22 2006/01/18 17:58:10 tom Exp $
+-- 
+-- Database: `celibero`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `abuse_forms`
+-- 
+
+CREATE TABLE `abuse_forms` (
+  `abuse_id` int(9) NOT NULL auto_increment,
+  `ts` datetime NOT NULL default '0000-00-00 00:00:00',
+  `email` varchar(120) NOT NULL default '',
+  `first_name` varchar(30) NOT NULL default '',
+  `last_name` varchar(30) NOT NULL default '',
+  `state` varchar(30) NOT NULL default '',
+  `country` varchar(30) NOT NULL default '',
+  `message` text NOT NULL,
+  `comments` text NOT NULL,
+  PRIMARY KEY  (`abuse_id`)
+) TYPE=MyISAM ;
+
+CREATE TABLE `quick_campaign` (
+`qc_id` INT( 9 ) NOT NULL AUTO_INCREMENT ,
+`title` VARCHAR( 40 ) NOT NULL ,
+`url` VARCHAR( 200 ) NOT NULL ,
+`username` VARCHAR( 50 ) NOT NULL ,
+`password` VARCHAR( 50 ) NOT NULL ,
+`type` VARCHAR( 10 ) NOT NULL ,
+PRIMARY KEY ( `qc_id` ) ,
+INDEX ( `type` )
+);
+
+CREATE TABLE `quick_campaign_creative` (
+`qcc_id` INT( 9 ) NOT NULL AUTO_INCREMENT ,
+`text` TEXT NOT NULL ,
+`html` TEXT NOT NULL ,
+`subjects` TEXT NOT NULL ,
+`froms` TEXT NOT NULL ,
+`sup_list_id` VARCHAR( 40 ) NOT NULL ,
+`comment` TEXT NOT NULL ,
+PRIMARY KEY ( `qcc_id` )
+);
+
+CREATE TABLE `bounce` (
+`email` VARCHAR( 225 ) NOT NULL ,
+`count` INT( 0 ) NOT NULL ,
+PRIMARY KEY ( `email` ) ,
+INDEX ( `count` )
+) TYPE = MYISAM ;
+
+CREATE TABLE `bouncer` (
+`email` VARCHAR( 225 ) NOT NULL ,
+PRIMARY KEY ( `email` )
+) TYPE = MYISAM ;
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `categories`
+-- 
+
+CREATE TABLE `categories` (
+  `category_id` int(9) NOT NULL auto_increment,
+  `title` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`category_id`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `commands`
+-- 
+
+CREATE TABLE `commands` (
+  `command_id` smallint(9) NOT NULL auto_increment,
+  `command` text NOT NULL,
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `state` tinyint(1) NOT NULL default '0',
+  `output` text NOT NULL,
+  `return` text NOT NULL,
+  `type` ENUM( 'shell', 'mysql' ) DEFAULT 'shell' NOT NULL,
+  PRIMARY KEY  (`command_id`),
+  KEY `date` (`date`),
+  KEY `state` (`state`),
+  INDEX ( `type` )
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+-- 
+-- Table structure for table `config`
+-- 
+
+CREATE TABLE `config` (
+  `KEY` varchar(30) NOT NULL default '',
+  `value` text NOT NULL,
+  PRIMARY KEY  (`KEY`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `crons`
+-- 
+
+CREATE TABLE `crons` (
+  `name` varchar(40) NOT NULL default '',
+  `last_checkin` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`name`),
+  KEY `last_checkin` (`last_checkin`)
+) TYPE=MyISAM;
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `email_to_category`
+-- 
+
+CREATE TABLE `email_to_category` (
+  `email` varchar(120) NOT NULL default '0',
+  `category_id` int(9) NOT NULL default '0',
+  `open` enum('1','0') NOT NULL default '0',
+  `click` enum('1','0') NOT NULL default '0',
+  PRIMARY KEY  (`email`,`category_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `email_to_sup`
+-- 
+
+CREATE TABLE `email_to_sup` (
+  `email` varchar(120) NOT NULL default '',
+  `sup_list_id` int(9) NOT NULL default '0',
+  `domain` enum('0','1') NOT NULL default '0',
+  PRIMARY KEY  (`email`,`sup_list_id`),
+  KEY `sup_list_id` (`sup_list_id`),
+  KEY `email` (`email`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `export`
+-- 
+
+CREATE TABLE `export` (
+  `export_id` int(9) NOT NULL auto_increment,
+  `state` int(2) NOT NULL default '0',
+  `name` varchar(100) NOT NULL default '',
+  `progress` int(9) NOT NULL default '0',
+  `type` int(2) NOT NULL default '0',
+  `list-cat` varchar(100) NOT NULL default '',
+  `total` int(9) NOT NULL default '0',
+  `ts` datetime NOT NULL default '0000-00-00 00:00:00',
+  `start` datetime NOT NULL default '0000-00-00 00:00:00',
+  `end` datetime NOT NULL default '0000-00-00 00:00:00',
+  `openers` ENUM( 'y', 'n', 'a' ) NOT NULL ,
+  `clickers` ENUM( 'y', 'n', 'a' ) NOT NULL ,
+  `import_id` INT( 9 ) NOT NULL default '0',
+  `subscribed` ENUM( 'y', 'n' ) DEFAULT 'n' NOT NULL ,
+  `unsubscribed` ENUM( 'y', 'n' ) DEFAULT 'n' NOT NULL ,
+  `bounce_s` ENUM( 'y', 'n' ) DEFAULT 'n' NOT NULL ,
+  `bounce_h` ENUM( 'y', 'n' ) DEFAULT 'n' NOT NULL ,
+  `where` VARCHAR( 225 ) NOT NULL ,
+  `slog_where` VARCHAR( 225 ) NOT NULL ,
+  PRIMARY KEY  (`export_id`),
+  KEY `ts` (`ts`),
+  KEY `state` (`state`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `global_unsub`
+-- 
+
+CREATE TABLE `global_unsub` (
+  `ts` datetime default NULL,
+  `address` varchar(64) NOT NULL default '',
+  `how` int(2) default '0',
+  `global_action` enum('0','1','2','3','4') NOT NULL default '0',
+  PRIMARY KEY  (`address`),
+  KEY `a` (`address`(10))
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `global_unsub_domain`
+-- 
+
+CREATE TABLE `global_unsub_domain` (
+  `ts` datetime NOT NULL default '0000-00-00 00:00:00',
+  `domain` varchar(50) NOT NULL default '',
+  `how` int(1) NOT NULL default '0',
+  `global_action` int(1) NOT NULL default '0',
+  PRIMARY KEY  (`domain`),
+  KEY `ts` (`ts`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+CREATE TABLE `global_words` (
+  `word_id` int(9) NOT NULL auto_increment,
+  `word` varchar(50) NOT NULL default '',
+  `ts` datetime NOT NULL default '0000-00-00 00:00:00',
+  `how` tinyint(2) NOT NULL default '0',
+  `global_action` tinyint(2) NOT NULL default '0',
+  PRIMARY KEY  (`word_id`),
+  UNIQUE KEY `word` (`word`),
+  KEY `how` (`how`,`global_action`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `imports`
+-- 
+
+CREATE TABLE `imports` (
+  `import_id` int(9) NOT NULL auto_increment,
+  `title` varchar(100) NOT NULL default '',
+  `description` text NOT NULL,
+  `format` text NOT NULL,
+  `ts` datetime NOT NULL default '0000-00-00 00:00:00',
+  `start` datetime NOT NULL default '0000-00-00 00:00:00',
+  `end` datetime NOT NULL default '0000-00-00 00:00:00',
+  `file` varchar(100) NOT NULL default '',
+  `state` varchar(30) NOT NULL default '',
+  `list` varchar(50) NOT NULL default '',
+  `delim` varchar(4) NOT NULL default ',',
+  `added` int(11) NOT NULL default '0',
+  `invalid` int(11) NOT NULL default '0',
+  `dups` int(11) NOT NULL default '0',
+  `unsub` int(11) NOT NULL default '0',
+  `unsub_g` int(11) NOT NULL default '0',
+  `unsub_d` int(11) NOT NULL default '0',
+  `filtered` int(9) NOT NULL default '0',
+  `total` int(11) NOT NULL default '0',
+  `type` varchar(30) NOT NULL default '',
+  `type_id` int(2) NOT NULL default '0',
+  `overwrite` TINYINT( 2 ) NOT NULL default '0',
+  `dedupe` TEXT NOT NULL,
+  PRIMARY KEY  (`import_id`),
+  KEY `ts` (`ts`),
+  KEY `state` (`state`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `links`
+-- 
+
+CREATE TABLE `links` (
+  `link_id` int(9) NOT NULL auto_increment,
+  `msg_id` int(9) NOT NULL default '0',
+  `URL` varchar(255) NOT NULL default '',
+  `count` int(9) NOT NULL default '0',
+  `dummy` int(1) NOT NULL default '0',
+  `img` enum('0','1') NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`link_id`),
+  KEY `msg_id` (`msg_id`),
+  KEY `dummy` (`dummy`),
+  KEY `date` (`date`),
+  KEY `img` (`img`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `log`
+-- 
+
+CREATE TABLE `log` (
+  `log_id` int(9) NOT NULL auto_increment,
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `type` varchar(30) NOT NULL default '',
+  `message` text NOT NULL,
+  `code` int(5) NOT NULL default '0',
+  PRIMARY KEY  (`log_id`),
+  KEY `date` (`date`),
+  KEY `code` (`code`),
+  KEY `type` (`type`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `mm_defaults`
+-- 
+
+CREATE TABLE `mm_defaults` (
+  `address` varchar(150) NOT NULL default '',
+  `first_name` varchar(30) NOT NULL default '',
+  `last_name` varchar(30) NOT NULL default '',
+  `ip` varchar(30) NOT NULL default '',
+  `gender` varchar(30) NOT NULL default '',
+  `dob` varchar(30) NOT NULL default '',
+  `state` varchar(30) NOT NULL default '',
+  `zip` varchar(30) NOT NULL default '',
+  `city` varchar(30) NOT NULL default '',
+  `postal` varchar(30) NOT NULL default '',
+  `timestamp` varchar(30) NOT NULL default ''
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `msg`
+-- 
+
+CREATE TABLE `msg` (
+  `id` int(11) NOT NULL auto_increment,
+  `server_id` int(5) NOT NULL default '0',
+  `title` varchar(100) NOT NULL default '',
+  `state` tinyint(1) default '0',
+  `query` varchar(255) NOT NULL default '',
+  `size` int(11) default '0',
+  `send_type` int(11) default '0',
+  `max_recipients` int(11) default '0',
+  `start_recipient` int(11) default '0',
+  `content` int(11) default '0',
+  `body` text,
+  `html_body` text,
+  `aol_body` text,
+  `comments` text NOT NULL,
+  `link_tracking` enum('1','0') NOT NULL default '1',
+  `category_add` int(1) NOT NULL default '3',
+  `seeds` text NOT NULL,
+  `sup_list_id` int(2) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `sup_list_id` (`sup_list_id`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `msg_to_category`
+-- 
+
+CREATE TABLE `msg_to_category` (
+  `msg_id` int(9) NOT NULL default '0',
+  `category_id` int(9) NOT NULL default '0',
+  PRIMARY KEY  (`msg_id`,`category_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `msg_to_domain`
+-- 
+
+CREATE TABLE `msg_to_domain` (
+  `msg_id` int(9) NOT NULL default '0',
+  `domain` varchar(70) NOT NULL default '',
+  KEY `msg_id` (`msg_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `msg_to_from`
+-- 
+
+CREATE TABLE `msg_to_from` (
+  `msg_id` int(9) NOT NULL default '0',
+  `from` varchar(100) NOT NULL default '',
+  KEY `msg_id` (`msg_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `msg_to_list`
+-- 
+
+CREATE TABLE `msg_to_list` (
+  `msg_id` int(9) NOT NULL default '0',
+  `list_id` int(9) NOT NULL default '0',
+  PRIMARY KEY  (`msg_id`,`list_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `msg_to_subject`
+-- 
+
+CREATE TABLE `msg_to_subject` (
+  `msg_id` int(9) NOT NULL default '0',
+  `subject` varchar(100) NOT NULL default '',
+  KEY `msg_id` (`msg_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+CREATE TABLE `rotations` (
+`server_id` INT( 9 ) NOT NULL ,
+`per_mailing` INT( 3 ) NOT NULL ,
+`per_seconds` INT( 8 ) NOT NULL ,
+`last_update` DATETIME NOT NULL ,
+`last_id` varchar(50) NOT NULL default '0',
+PRIMARY KEY ( `server_id` ) ,
+INDEX ( `last_update` )
+);
+
+-- 
+-- Table structure for table `schedule`
+-- 
+
+CREATE TABLE `schedule` (
+  `id` int(11) NOT NULL auto_increment,
+  `msg_id` int(11) default NULL,
+  `server_id` int(9) NOT NULL default '0',
+  `title` varchar(60) NOT NULL default '',
+  `state` tinyint(1) default '0',
+  `old_state` tinyint(1) NOT NULL default '0',
+  `scheduled_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `start_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `end_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `total_emails` int(11) default '0',
+  `success` int(11) NOT NULL default '0',
+  `deferral` int(11) NOT NULL default '0',
+  `failure` int(11) NOT NULL default '0',
+  `opens` int(11) default '0',
+  `subject_lines` int(9) NOT NULL default '0',
+  `from_lines` int(9) NOT NULL default '0',
+  `domains` int(9) NOT NULL default '0',
+  `sql_extra` text NOT NULL,
+  `process_results` int(9) NOT NULL default '0',
+  `max_threads` INT( 5 ) NOT NULL default '300',
+  `skip_first` INT( 9 ) NOT NULL ,
+  `send_to_first` INT( 9 ) NOT NULL ,
+  `send_to_last` INT( 9 ) NOT NULL ,
+  `max_of` INT( 9 ) NOT NULL,
+  `retry_level` INT( 9 ) NOT NULL ,
+  `retries` INT( 9 ) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `msgid` (`msg_id`),
+  KEY `scheduled_time` (`scheduled_time`),
+  KEY `process_results` (`process_results`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `schedule_log`
+-- 
+
+CREATE TABLE `schedule_log` (
+  `schedule_id` int(9) NOT NULL default '0',
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `message` text NOT NULL,
+  KEY `schedule_id` (`schedule_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `server_to_ip`
+-- 
+
+CREATE TABLE `server_to_ip` (
+  `server_id` int(9) NOT NULL default '0',
+  `ip` varchar(50) NOT NULL default '',
+  `domain` varchar(120) NOT NULL default '',
+  `default` enum('1','0') NOT NULL default '0',
+  PRIMARY KEY  (`server_id`,`ip`),
+  KEY `default` (`default`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `servers`
+-- 
+
+CREATE TABLE `servers` (
+  `server_id` int(9) NOT NULL auto_increment,
+  `type` int(2) NOT NULL default '1',
+  `name` varchar(40) NOT NULL default '',
+  PRIMARY KEY  (`server_id`),
+  KEY `type` (`type`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `sgdne`
+-- 
+
+CREATE TABLE `sgdne` (
+  `username` varchar(30) NOT NULL default '',
+  `password` varchar(30) NOT NULL default '',
+  `active` enum('0','1') NOT NULL default '0',
+  `last_checkin` datetime NOT NULL default '0000-00-00 00:00:00',
+  `last_email` varchar(130) NOT NULL default '',
+  `hostname` varchar(100) NOT NULL default '',
+  `database` varchar(50) NOT NULL default '',
+  `last_checkin_domain` datetime NOT NULL default '0000-00-00 00:00:00',
+  `last_domain` varchar(100) NOT NULL default '',
+  `last_checkin_word` datetime NOT NULL default '0000-00-00 00:00:00',
+  `last_word` varchar(60) NOT NULL default '',
+  PRIMARY KEY  (`username`),
+  KEY `last_checkin_word` (`last_checkin_word`,`last_word`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `supression_lists`
+-- 
+
+CREATE TABLE `supression_lists` (
+  `sup_list_id` int(9) NOT NULL auto_increment,
+  `title` varchar(50) NOT NULL default '',
+  `state` INT( 9 ) DEFAULT '0' NOT NULL,
+  PRIMARY KEY  (`sup_list_id`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `user`
+-- 
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL auto_increment,
+  `username` varchar(255) default NULL,
+  `password` varchar(255) default NULL,
+  `textpassword` varchar(255) default NULL,
+  `db_host` varchar(255) NOT NULL default 'localhost',
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users_auth`
+-- 
+
+CREATE TABLE `users_auth` (
+  `user_id` int(9) NOT NULL auto_increment,
+  `username` varchar(50) NOT NULL default '',
+  `password` varchar(32) NOT NULL default '',
+  `text_password` varchar(80) NOT NULL default '',
+  PRIMARY KEY  (`user_id`),
+  UNIQUE KEY `username` (`username`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users_groups`
+-- 
+
+CREATE TABLE `users_groups` (
+  `group_id` int(9) NOT NULL auto_increment,
+  `name` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`group_id`)
+) TYPE=MyISAM ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users_groups_2_users`
+-- 
+
+CREATE TABLE `users_groups_2_users` (
+  `group_id` int(9) NOT NULL default '0',
+  `user_id` int(9) NOT NULL default '0',
+  PRIMARY KEY  (`group_id`,`user_id`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users_permissions`
+-- 
+
+CREATE TABLE `users_permissions` (
+  `id` int(9) NOT NULL default '0',
+  `id_type` enum('u','g') NOT NULL default 'u',
+  `perm_key` varchar(50) NOT NULL default '',
+  `level` int(4) NOT NULL default '1',
+  `has` enum('y','n') NOT NULL default 'y',
+  PRIMARY KEY  (`id`,`id_type`,`perm_key`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users_profile_big_text`
+-- 
+
+CREATE TABLE `users_profile_big_text` (
+  `user_id` int(9) NOT NULL default '0',
+  `profile_key` varchar(50) NOT NULL default '',
+  `text` text NOT NULL,
+  KEY `user_id` (`user_id`,`profile_key`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users_profile_text`
+-- 
+
+CREATE TABLE `users_profile_text` (
+  `user_id` int(9) NOT NULL default '0',
+  `profile_key` varchar(50) NOT NULL default '',
+  `text` varchar(250) NOT NULL default '',
+  KEY `profile_key` (`user_id`,`profile_key`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users_session`
+-- 
+
+CREATE TABLE `users_session` (
+  `session_id` varchar(32) NOT NULL default '',
+  `user_id` int(9) NOT NULL default '0',
+  `last_activity` varchar(32) NOT NULL default '',
+  `duration` int(9) NOT NULL default '0',
+  PRIMARY KEY  (`session_id`),
+  KEY `user_id` (`user_id`)
+) TYPE=MyISAM;
+
+CREATE TABLE `errors` (
+  `error_id` int(9) NOT NULL auto_increment,
+  `from` varchar(50) NOT NULL default '',
+  `error` text NOT NULL,
+  `state` enum('n','d') NOT NULL default 'n',
+  PRIMARY KEY  (`error_id`),
+  KEY `state` (`state`)
+) TYPE=MyISAM;

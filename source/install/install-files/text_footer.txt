@@ -1,0 +1,20 @@
+
+
+==============================================================
+{{dn}} never sends unsolicited email. {{dn}} has been
+given the right to market to you through our Web site partners and their
+privacy policies. Specifically, you are receiving this correspondence
+because you have provided permission (via your registration and
+acceptance of the privacy policies for a newsletter, contest, web-based
+service or other activity on the web) to receive recurring promotions or
+offers from various third parties.
+==============================================================
+* To be removed from this mailing list, click or follow this link:
+http://{{dn}}/index.php?l={{03}}&e={{01}}
+This message was sent to: {{01}}
+X-{{dn}}-Recipient: {{01}}
+X-{{dn}}-Userid: {{03}}
+{{dn}} 
+{address} // x{{02}}x{{03}}x
+{{dn}} is not responsible for third party offers, services or
+products and makes no representations or warranties regarding them. 

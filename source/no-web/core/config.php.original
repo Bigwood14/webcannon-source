@@ -1,0 +1,45 @@
+<?php
+define('SERVER_ID', '{server_id}');
+define('SERVER_DB', '{server_db}');
+/**
+* Config is the class for storing configuration values most should
+* be written directly to this file although it does supply some functions
+* for gathering from other sources.
+*
+* @author      
+* @version     1.0
+* @package Core
+*/
+class config
+{
+    var $values;
+    
+    /**
+    * Set up the options
+    *
+    * @return          void
+    * @since           1.0
+    */
+    function config()
+    {
+        // Path to the main installed directory
+        // Orignal vars are stated to the right in comment for setup they will be {var} er {domain}.
+    	$this->values['site']['domain']        = '{domain}'; // domain
+    	$this->values['site']['just_domain']   = '{just_domain}'; // domain
+    	$this->values['site']['path']          = '{root_path}'; // root_path
+    	$this->values['site']['core_path']     = '{core_path}'; // core_path
+    	$this->values['site']['upload_patch']  = '{upload_path}'; // upload_path
+    	$this->values['site']['installed']     = '{installed}'; // installed
+    	
+    	$this->values['template']['directory']     = $this->values['site']['path']."no-web/templates/";
+        
+        $this->values['db']['type']         = 'mysql';
+        $this->values['db']['hostname']     = '{hostname}'; // hostname
+        $this->values['db']['username']     = '{username}'; // username
+        $this->values['db']['password']     = '{password}'; // password
+        $this->values['db']['database']     = '{database}'; // database
+        
+        $this->values['mm_field_hide'] = array('id','mask','import_id','list_id');
+    }
+}
+ ?>

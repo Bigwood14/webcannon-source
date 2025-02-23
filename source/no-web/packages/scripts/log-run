@@ -1,0 +1,3 @@
+#!/bin/sh
+  exec setuidgid qmaill \
+  multilog t s4000000 ./main
